@@ -16,9 +16,10 @@ public class Main {
         Index index5 = new Index(LocalDateTime.now().minusDays(1), "test3");
         Index index6 = new Index(LocalDateTime.now().minusDays(2), "test3");
         Index index7 = new Index(LocalDateTime.now(), "test");
-        Index index8 = new Index(LocalDateTime.now().minusDays(1), "test");
+        Index index8 = new Index(LocalDateTime.now().minusDays(5), "test");
+        Index index9 = new Index(LocalDateTime.now().minusDays(6), "test");
 
-        List<Index> indices = Arrays.asList(index, index1, index2, index3, index4, index5, index6, index7, index8);
+        List<Index> indices = Arrays.asList(index, index1, index2, index3, index4, index5, index6, index7, index8, index9);
         mergeIndices(indices);
     }
 
@@ -29,9 +30,7 @@ public class Main {
         for (Index index : indices) {
 
             if (mappedIndexes.get(index.getSource()) == null){
-                List<Index> list = new ArrayList<>();
-                list.add(index);
-                mappedIndexes.put(index.getSource(), list);
+                mappedIndexes.computeIfAbsent(index.getSource(), x -> new ArrayList<>()).add(index);
             }
             else if (!mappedIndexes.get(index.getSource()).contains(index)){
                 mappedIndexes.get(index.getSource()).add(index);
@@ -44,9 +43,7 @@ public class Main {
 
             for (Index ind : inds) {
                 if (dateMappedIndexes.get(ind.getDateTime().toLocalDate()) == null){
-                    List<Index> list = new ArrayList<>();
-                    list.add(ind);
-                    dateMappedIndexes.put(ind.getDateTime().toLocalDate(), list);
+                    dateMappedIndexes.computeIfAbsent(ind.getDateTime().toLocalDate(), x -> new ArrayList<>()).add(ind);
                 }
 
                 else if (!dateMappedIndexes.get(ind.getDateTime().toLocalDate()).contains(ind)){
