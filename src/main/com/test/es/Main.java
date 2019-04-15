@@ -78,7 +78,7 @@ public class Main {
         List<Index> indices = new ArrayList<>();
 
         for (Map.Entry<LocalDate, List<Index>> entry : indexes.entrySet()) {
-            if(entry.getKey().isEqual(from) || entry.getKey().isAfter(from) || entry.getKey().isBefore(to) || entry.getKey().isEqual(to)){
+            if(entry.getKey().isEqual(from) || entry.getKey().isAfter(from) || entry.getKey().isBefore(to)){
                 indices.addAll(entry.getValue());
             }
         }
