@@ -55,15 +55,19 @@ public class Main {
             }
 
             List<Index> weekIndexes = mergePeriod(LocalDate.now().minusDays(7), LocalDate.now(), dateMappedIndexes);
+            //create week index
+            Index weekInitialIndex = elasticClient.createIndex(weekIndexes.get(0));
 
-            Index weekInitialIndex = weekIndexes.get(0);
             weekIndexes.remove(weekInitialIndex);
+            //merge all indexes to week index
             weekIndexes.forEach(ind -> elasticClient.merge(weekInitialIndex, ind));
 
             List<Index> monthIndexes = mergePeriod(LocalDate.now().minusMonths(1), LocalDate.now(), dateMappedIndexes);
 
-            Index monthInitialIndex = monthIndexes.get(0);
+            //create month index
+            Index monthInitialIndex = elasticClient.createIndex(monthIndexes.get(0));
             monthIndexes.remove(monthInitialIndex);
+            //merge all indexes to month index
             monthIndexes.forEach(ind -> elasticClient.merge(monthInitialIndex, ind));
 
         }

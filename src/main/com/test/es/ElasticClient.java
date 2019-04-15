@@ -5,4 +5,6 @@ public class ElasticClient {
 
     public void merge(Index indexA, Index indexB){}
 
+    public Index createIndex(Index index){return null;}
+
 }
